@@ -1,0 +1,49 @@
+name: Build and deploy the slides to GitHub Pages
+
+# Build the static reveal.js deck and publish it to the gh-pages branch.
+#
+# Deliberately lightweight: only the docs dependencies are installed (no marimo,
+# OpenAI, numpy, or the agent/sandbox tooling), and docs/make_handout.py turns the
+# live demo iframes (marimo / terminal / capture panel, which point at the
+# presenter's localhost) into labelled placeholders. The published deck is fully
+# static — run the live demos locally with `make stage`.
+
+permissions:
+  contents: write
+
+on:
+  push:
+    branches: [ main ]
+  workflow_dispatch:
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Install docs dependencies (no notebooks / heavy deps)
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r docs/requirements.txt
+
+      - name: Build the reveal.js deck
+        run: sphinx-build -b revealjs docs docs/_build/revealjs
+
+      - name: Make it a clean static site (live demos -> placeholders, assets vendored)
+        run: python docs/make_handout.py
+
+      - name: Deploy to gh-pages
+        uses: peaceiris/actions-gh-pages@v4
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./docs/_build/handout
+          publish_branch: gh-pages
+          user_name: 'github-actions[bot]'
+          user_email: 'github-actions[bot]@users.noreply.github.com'

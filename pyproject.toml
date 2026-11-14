@@ -1,0 +1,37 @@
+[project]
+name = "llm-security-for-beginners"
+version = "0.0.0"
+description = "LLM security for beginners — the OWASP Top 10 for LLM apps and for agents, with live demos."
+requires-python = ">=3.11"
+dependencies = [
+    "openai",
+    "marimo",
+    "python-dotenv",
+    "numpy>=2.4.6",
+    "safetensors>=0.8.0",
+]
+
+[dependency-groups]
+docs = [
+    "sphinx",
+    "sphinx-revealjs",
+    "sphinx-design",
+]
+
+[tool.marimo.runtime]
+# Load the key (and anything else) from .env for `marimo edit`/`marimo run`.
+# serve.py also loads it, so the embedded demos work the same way.
+dotenv = [".env"]
+# Show a real error instead of a blank page if the key is missing or a call
+# fails — the default (False) is what made a missing key look like a render bug.
+show_tracebacks = true
+
+[tool.ruff]
+line-length = 88
+
+[tool.ruff.lint]
+select = ["E", "F", "W"]
+
+[tool.ruff.lint.per-file-ignores]
+# marimo notebooks repeat `def _(...)` cells and keep secrets/data inline.
+"llm*/*.py" = ["E501", "F811"]

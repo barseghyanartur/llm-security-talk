@@ -1,0 +1,13 @@
+# build + envs
+docs/_build/
+.venv/
+*.egg-info/
+__pycache__/
+__marimo__/
+.pytest_cache/
+.ruff_cache/
+
+# secrets + local state (the real key, the webhook catcher's token, stage PIDs)
+.env
+webhook/.webhook-token
+.stage-pids

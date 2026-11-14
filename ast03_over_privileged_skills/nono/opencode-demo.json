@@ -1,0 +1,5 @@
+{
+  "extends": "nolabs-ai/opencode-v1",
+  "meta": { "name": "opencode-demo", "version": "1.0.0" },
+  "network": { "allow_domain": ["api.openai.com", "models.opencode.ai"] }
+}

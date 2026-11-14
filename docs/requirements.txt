@@ -1,0 +1,9 @@
+# Docs-only dependencies for building the reveal.js deck (e.g. on GitHub Pages).
+#
+# Intentionally lightweight: NO marimo / openai / numpy / safetensors. The hosted
+# deck is static — docs/make_handout.py turns the live demo iframes into
+# placeholders — so none of the Part 1 / Part 2 runtime deps are needed to build
+# and publish the slides. Pinned to the versions the deck is authored against.
+sphinx==9.1.1
+sphinx-revealjs==3.2.1
+sphinx-design==0.8.0

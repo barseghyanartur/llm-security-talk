@@ -1,0 +1,9 @@
+"""Tiny sample app — the source file an over-privileged skill should never edit."""
+
+
+def add(a, b):
+    return a + b
+
+
+if __name__ == "__main__":
+    print(add(2, 3))
